@@ -1,0 +1,4 @@
+﻿I got the ship from https://opengameart.org/content/1616-ship-collection
+I got the asteroid from https://opengameart.org/content/spinning-asteroid-animation
+I made the sound with https://www.bfxr.net/
+And the ball is from our tutorials that I used to do collision debugging.
