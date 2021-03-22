@@ -14,6 +14,7 @@ namespace GameTwo
         private AsteroidSprite[] asteroid;
         private SoundEffect explosion;
         private Texture2D ball;
+        private SpriteFont spriteFont;
         private bool endGame;
 
         public Game2()
@@ -39,6 +40,10 @@ namespace GameTwo
                 new AsteroidSprite(new Vector2(200, 400)),
                 new AsteroidSprite(new Vector2(400, 400)),
                 new AsteroidSprite(new Vector2(600, 400)),
+                new AsteroidSprite(new Vector2(300, 100)),
+                new AsteroidSprite(new Vector2(300, 300)),
+                new AsteroidSprite(new Vector2(500, 100)),
+                new AsteroidSprite(new Vector2(500, 300)),
             };
             
 
@@ -52,6 +57,7 @@ namespace GameTwo
             foreach (var ast in asteroid) ast.LoadContent(Content);
             explosion = Content.Load<SoundEffect>("Explosion");
             ball = Content.Load<Texture2D>("ball");
+            spriteFont = Content.Load<SpriteFont>("arial");
 
 
             // TODO: use this.Content to load your game content here
@@ -67,6 +73,7 @@ namespace GameTwo
 
             if (!endGame)
             {
+                
                 foreach (var ast in asteroid)
                 {
                     if (ast.Bounds.CollidesWith(ship.Bounds))
@@ -95,8 +102,14 @@ namespace GameTwo
             {
                 GraphicsDevice.Clear(Color.Red);
                 spriteBatch.Begin();
+                spriteBatch.DrawString(spriteFont, $"You have Died. Press R to restart!", new Vector2(200, 200), Color.Black);
                 spriteBatch.End();
                 base.Draw(gameTime);
+                if (Keyboard.GetState().IsKeyDown(Keys.R)){
+                    endGame = false;
+                }
+                Initialize();
+                
             }
             else
             {
