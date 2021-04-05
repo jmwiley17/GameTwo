@@ -14,15 +14,19 @@ namespace GameTwo
         private AsteroidSprite[] asteroid;
         private SoundEffect explosion;
         private Texture2D ball;
+        private Texture2D planet; 
         private SpriteFont spriteFont;
         private bool endGame;
+        ExplosionParticleSystem _explosions;
 
         public Game2()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
             endGame = false;
+
         }
 
         protected override void Initialize()
@@ -45,6 +49,9 @@ namespace GameTwo
                 new AsteroidSprite(new Vector2(500, 100)),
                 new AsteroidSprite(new Vector2(500, 300)),
             };
+
+            _explosions = new ExplosionParticleSystem(this, 20);
+            Components.Add(_explosions);
             
 
             base.Initialize();
@@ -58,6 +65,7 @@ namespace GameTwo
             explosion = Content.Load<SoundEffect>("Explosion");
             ball = Content.Load<Texture2D>("ball");
             spriteFont = Content.Load<SpriteFont>("arial");
+            planet = Content.Load<Texture2D>("Planet14");
 
 
             // TODO: use this.Content to load your game content here
@@ -79,6 +87,7 @@ namespace GameTwo
                     if (ast.Bounds.CollidesWith(ship.Bounds))
                     {
                         explosion.Play();
+                        _explosions.PlaceExplosion(ship.Position);
                         endGame = true;
 
                     }
@@ -114,7 +123,14 @@ namespace GameTwo
             else
             {
                 GraphicsDevice.Clear(Color.Black);
-                spriteBatch.Begin();
+
+                float shipX = MathHelper.Clamp(ship.Position.X, 200, 720);
+                float offsetX = 200 - shipX;
+                Matrix transform;
+                transform = Matrix.CreateTranslation(offsetX * 0.2f, 0, 0);
+
+                spriteBatch.Begin(transformMatrix: transform);
+                spriteBatch.Draw(planet, Vector2.Zero, Color.White);
                 ship.Draw(gameTime, spriteBatch);
                 foreach (var ast in asteroid)
                 {

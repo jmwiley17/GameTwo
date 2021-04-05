@@ -2,3 +2,5 @@
 I got the asteroid from https://opengameart.org/content/spinning-asteroid-animation
 I made the sound with https://www.bfxr.net/
 And the ball is from our tutorials that I used to do collision debugging.
+I got the planet for the background from https://opengameart.org/content/planet-collection-builder Planets (from / created by ) Planet Collection & Builder by RSL Labs. http://opengameart.org/users/rsl-labs
+I got the explosion from the tutorial we did on particles
