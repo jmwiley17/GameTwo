@@ -29,6 +29,8 @@ namespace GameTwo
             this.bounds = new BoundingCircle(position + new Vector2(16, 16), 16);
         }
 
+        
+
         public Vector2 Position => position;
 
         public Color Color { get; set; } = Color.White;

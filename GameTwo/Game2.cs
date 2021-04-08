@@ -18,6 +18,11 @@ namespace GameTwo
         private SpriteFont spriteFont;
         private bool endGame;
         ExplosionParticleSystem _explosions;
+        FireworkParticleSystem _fireworks;
+        RainParticleSystem _rain;
+
+
+
 
         public Game2()
         {
@@ -44,15 +49,23 @@ namespace GameTwo
                 new AsteroidSprite(new Vector2(200, 400)),
                 new AsteroidSprite(new Vector2(400, 400)),
                 new AsteroidSprite(new Vector2(600, 400)),
-                new AsteroidSprite(new Vector2(300, 100)),
-                new AsteroidSprite(new Vector2(300, 300)),
-                new AsteroidSprite(new Vector2(500, 100)),
-                new AsteroidSprite(new Vector2(500, 300)),
+                new AsteroidSprite(new Vector2(300, 75)),
+                new AsteroidSprite(new Vector2(300, 325)),
+                new AsteroidSprite(new Vector2(500, 75)),
+                new AsteroidSprite(new Vector2(500, 325)),
             };
+
+            _rain = new RainParticleSystem(this, new Rectangle(0, 0, 800, 10));
+            Components.Add(_rain);
 
             _explosions = new ExplosionParticleSystem(this, 20);
             Components.Add(_explosions);
+
+            _fireworks = new FireworkParticleSystem(this, 20);
+            Components.Add(_fireworks);
+
             
+
 
             base.Initialize();
         }
@@ -93,8 +106,16 @@ namespace GameTwo
                     }
                 }
             }
+
             
+            if(ship.Position.X > 700)
+            {
+                _fireworks.PlaceFirework(ship.Position);
+            }
+
             
+
+
 
             // TODO: Add your update logic here
 
@@ -116,8 +137,9 @@ namespace GameTwo
                 base.Draw(gameTime);
                 if (Keyboard.GetState().IsKeyDown(Keys.R)){
                     endGame = false;
+                    Initialize();
                 }
-                Initialize();
+                
                 
             }
             else
