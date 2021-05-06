@@ -17,7 +17,7 @@ namespace GameTwo
 
         private Texture2D texture;
 
-        private Vector2 position = new Vector2(0, 50);
+        public Vector2 position { get; set; }  = new Vector2(0, 50);
         
         Vector2 velocity = new Vector2(20,0);
 
@@ -31,7 +31,7 @@ namespace GameTwo
 
         
 
-        public Vector2 Position => position;
+        //public Vector2 Position => position;
 
         public Color Color { get; set; } = Color.White;
 

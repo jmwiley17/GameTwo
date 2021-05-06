@@ -100,7 +100,7 @@ namespace GameTwo
                     if (ast.Bounds.CollidesWith(ship.Bounds))
                     {
                         explosion.Play();
-                        _explosions.PlaceExplosion(ship.Position);
+                        _explosions.PlaceExplosion(ship.position);
                         endGame = true;
 
                     }
@@ -108,9 +108,10 @@ namespace GameTwo
             }
 
             
-            if(ship.Position.X > 700)
+            
+            if(ship.position.X > 700)
             {
-                _fireworks.PlaceFirework(ship.Position);
+                _fireworks.PlaceFirework(ship.position);
             }
 
             
@@ -146,7 +147,7 @@ namespace GameTwo
             {
                 GraphicsDevice.Clear(Color.Black);
 
-                float shipX = MathHelper.Clamp(ship.Position.X, 200, 720);
+                float shipX = MathHelper.Clamp(ship.position.X, 200, 720);
                 float offsetX = 200 - shipX;
                 Matrix transform;
                 transform = Matrix.CreateTranslation(offsetX * 0.2f, 0, 0);
@@ -154,14 +155,19 @@ namespace GameTwo
                 spriteBatch.Begin(transformMatrix: transform);
                 spriteBatch.Draw(planet, Vector2.Zero, Color.White);
                 ship.Draw(gameTime, spriteBatch);
+                var rect1 = new Rectangle((int)(ship.Bounds.Center.X - ship.Bounds.Radius),
+                                             (int)(ship.Bounds.Center.Y - ship.Bounds.Radius),
+                                             (int)(2 * ship.Bounds.Radius), (int)(2 * ship.Bounds.Radius));
+                spriteBatch.Draw(ball, rect1, Color.White);
                 foreach (var ast in asteroid)
                 {
                     ast.Draw(gameTime, spriteBatch);
-                    /*var rect = new Rectangle((int)(asteroid.Bounds.Center.X - asteroid.Bounds.Radius),
-                                             (int)(asteroid.Bounds.Center.Y - asteroid.Bounds.Radius),
-                                             (int)(2 * asteroid.Bounds.Radius), (int)(2 * asteroid.Bounds.Radius));
-                    spriteBatch.Draw(ball, rect, Color.White);*/
+                    var rect = new Rectangle((int)(ast.Bounds.Center.X - ast.Bounds.Radius),
+                                             (int)(ast.Bounds.Center.Y - ast.Bounds.Radius),
+                                             (int)(2 * ast.Bounds.Radius), (int)(2 * ast.Bounds.Radius));
+                    spriteBatch.Draw(ball, rect, Color.White);
                 }
+                
 
                 spriteBatch.End();
 
